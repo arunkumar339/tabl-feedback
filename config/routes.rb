@@ -1,6 +1,6 @@
 TablFeedback::Application.routes.draw do
 
-  match "/feedbacks/submit" => "feedbacks#create", :as=>:feedback_create,:via=>[:get]
+  match "/feedback/submit" => "feedbacks#create", :as=>:feedback_create,:via=>[:get]
   root :to => "feedbacks#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -23,14 +23,13 @@
             <p style="text-align: center">TABL Feedback Form </p>
 
             <input type="text" name="name" id="name" value="" placeholder="Name" class="required" />
-            <input type="text" name="email" id="email" value="" placeholder="Email"  class="required" />
+            <input type="text" name="email" id="email" value="" placeholder="Email" class="required" />
             <input type="text" name="phone" id="phone" value="" placeholder="Phone (optional)" />
                <textarea name="comment" id="comment" value="" placeholder="comment" class="required"></textarea>
-            <span>Rate TABL</span> 
+            <span>Rate TABL</span>
             <div id="star"></div>
-            <p></p>
 
-            <input type="submit" value="Submit" id="submit"/>
+            <input type="button" value="Submit" id="submit-btn"/>
         </form>
 
     </div><!-- /content -->
@@ -45,7 +44,7 @@
         <h1>HR GURU</h1>
     </div><!-- /header -->
 
-    <div id="dialog_content"  data-role="content" data-theme="a">
+    <div id="dialog_content" data-role="content" data-theme="a">
         <p id="definition">dummy text</p>
 
     </div><!-- /content -->
@@ -59,17 +58,17 @@
     var result;
 
     $(function(){
-        $("#submit").click(function(e){
+        $("#submit-btn").click(function(e){
             $.mobile.loading( 'show', {
                 theme: 'z'
             });
             e.preventDefault();
-				var name=$("#name").val();
-                var email = $("#email").val();
-                var phone = $("#phone").val();
-                var comment = $("#comment").val();
-                var score = $("#star input").val();
-			jQuery.getJSON("http://localhost/feedback/submit.php?name="+name+"&email="+email+"&phone="+phone+"&comment="+comment+"&score="+score,function(json){
+            var name=$("#name").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var comment = $("#comment").val();
+            var score = $("#star input").val();
+            jQuery.getJSON("http://tablargefeedback.herokuapp.com/feedback/submit?name="+name+"&email="+email+"&phone="+phone+"&comment="+comment+"&score="+score,function(json){
                 result=json;
                 proessJson();
             });
@@ -77,35 +76,35 @@
         $("#feedback-form").validate();
     });
     function proessJson() {
-		$("#two div  h1").text("Hi "+result.name);
-		$("#two #definition").text("Thanks for your feedback .! Your Reference Number is "+result.reference_number)
-	    $.mobile.loading( 'hide' );
-		$("input , textarea").val("");
+$("#two div h1").text("Hi "+result.name);
+$("#two #definition").text("Thanks for your feedback .! Your Reference Number is "+result.reference_number)
+$.mobile.loading( 'hide' );
+$("input , textarea").val("");
         
         $.mobile.changePage('#two','pop',false,false);
 
     }
     $('#star').raty({
-		numberMax: 5
-	});
+numberMax: 5
+});
 </script>
 <style>
 .ui-content{
-		width:400px;
-		margin:0 auto;
+width:400px;
+margin:0 auto;
 }
 #star{
-		width:50% !important;
-		margin:0 auto;
-	}
-	
+width:50% !important;
+margin:0 auto;
+}
+
 #star img{
-		margin-left:10px;
-		margin-right:10px;
+margin-left:10px;
+margin-right:10px;
 }
 form span{
-		text-align:center;
-		display:block;
-		width:100%;
-	}
+text-align:center;
+display:block;
+width:100%;
+}
 </style>
