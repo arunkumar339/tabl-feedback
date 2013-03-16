@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TABL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <%= stylesheet_link_tag"jquery.mobile-1.2.0.min.css" %>
+    <%= javascript_include_tag "jquery-1.8.2.min.js"%>
+    <%= javascript_include_tag "jquery.raty.js"%>
+    <%= javascript_include_tag "jquery.mobile-1.2.0.min.js"%>
+    <%= javascript_include_tag "jquery.validate"%>
+</head>
+<body >
+
+<div data-role="page">
+
+    <div data-role="header">
+        <!--<h1>HR GURU</h1>-->
+       <h1><img src="/assets/loko.png" height="50" width="50"/></h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+        <form action="" method="get" id="feedback_form">
+
+            <p style="text-align: center">TABL Feedback Form </p>
+
+            <input type="text" name="name" id="name" value="" placeholder="Name" class="required" />
+            <input type="text" name="email" id="email" value="" placeholder="Email"  class="required" />
+            <input type="text" name="phone" id="phone" value="" placeholder="Phone (optional)" />
+               <textarea name="comment" id="comment" value="" placeholder="comment" class="required"></textarea>
+            <span>Rate TABL</span> 
+            <div id="star"></div>
+            <p></p>
+
+            <input type="submit" value="Submit" id="submit"/>
+        </form>
+
+    </div><!-- /content -->
+
+</div><!-- /page -->
+
+
+
+<div data-role="dialog" id="two" data-theme="a">
+
+    <div data-role="header">
+        <h1>HR GURU</h1>
+    </div><!-- /header -->
+
+    <div id="dialog_content"  data-role="content" data-theme="a">
+        <p id="definition">dummy text</p>
+
+    </div><!-- /content -->
+
+</div><!-- /page two -->
+
+</body>
+</html>
+<script >
+  
+    var result;
+
+    $(function(){
+        $("#submit").click(function(e){
+            $.mobile.loading( 'show', {
+                theme: 'z'
+            });
+            e.preventDefault();
+				var name=$("#name").val();
+                var email = $("#email").val();
+                var phone = $("#phone").val();
+                var comment = $("#comment").val();
+                var score = $("#star input").val();
+			jQuery.getJSON("http://localhost/feedback/submit.php?name="+name+"&email="+email+"&phone="+phone+"&comment="+comment+"&score="+score,function(json){
+                result=json;
+                proessJson();
+            });
+        });
+        $("#feedback-form").validate();
+    });
+    function proessJson() {
+		$("#two div  h1").text("Hi "+result.name);
+		$("#two #definition").text("Thanks for your feedback .! Your Reference Number is "+result.reference_number)
+	    $.mobile.loading( 'hide' );
+		$("input , textarea").val("");
+        
+        $.mobile.changePage('#two','pop',false,false);
+
+    }
+    $('#star').raty({
+		numberMax: 5
+	});
+</script>
+<style>
+.ui-content{
+		width:400px;
+		margin:0 auto;
+}
+#star{
+		width:50% !important;
+		margin:0 auto;
+	}
+	
+#star img{
+		margin-left:10px;
+		margin-right:10px;
+}
+form span{
+		text-align:center;
+		display:block;
+		width:100%;
+	}
+</style>
