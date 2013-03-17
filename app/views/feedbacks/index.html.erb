@@ -68,7 +68,7 @@
             var phone = $("#phone").val();
             var comment = $("#comment").val();
             var score = $("#star input").val();
-            jQuery.getJSON("http://tablargefeedback.herokuapp.com/feedback/submit?name="+name+"&email="+email+"&phone="+phone+"&comment="+comment+"&score="+score,function(json){
+            jQuery.getJSON("/feedback/submit?name="+name+"&email="+email+"&phone="+phone+"&comment="+comment+"&score="+score,function(json){
                 result=json;
                 proessJson();
             });
